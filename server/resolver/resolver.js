@@ -1,17 +1,9 @@
+const { books, authors } = require("../data/static.js");
+
 const resolvers = {
   Query: {
-    books: () => [
-      {
-        id: 1,
-        name: "De Men Phieu Luu Ky",
-        genre: "Adventure",
-      },
-      {
-        id: 2,
-        name: "Lam giau khong kho",
-        genre: "Education",
-      },
-    ],
+    books: () => books,
+    authors: () => authors,
   },
 };
 
