@@ -3,11 +3,25 @@ const books = [
     id: 1,
     name: "De Men Phieu Luu Ky",
     genre: "Adventure",
+    authorId: 3,
   },
   {
     id: 2,
     name: "Lam giau khong kho",
     genre: "Education",
+    authorId: 4,
+  },
+  {
+    id: 3,
+    name: "Tat Den",
+    genre: "Short Story",
+    authorId: 1,
+  },
+  {
+    id: 4,
+    name: "Chi Pheo",
+    genre: "Short Story",
+    authorId: 2,
   },
 ];
 
@@ -26,6 +40,11 @@ const authors = [
     id: 3,
     name: "Vu Trong Phung",
     age: 109,
+  },
+  {
+    id: 4,
+    name: "Nguyen Dinh Cuu",
+    age: 58,
   },
 ];
 
