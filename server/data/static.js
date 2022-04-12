@@ -23,6 +23,12 @@ const books = [
     genre: "Short Story",
     authorId: 2,
   },
+  {
+    id: 5,
+    name: "Leu chong",
+    genre: "Short Story",
+    authorId: 1,
+  },
 ];
 
 const authors = [
