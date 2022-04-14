@@ -10,6 +10,9 @@ const APP_DATABASE_URL = process.env.APP_DATABASE_URL;
 const typeDefs = require("./schema/schema");
 const resolvers = require("./resolver/resolver");
 
+//Load db methods
+const mongoDataMethods = require("./data/db.js");
+
 //Connect to MongoDB
 const connectDB = async () => {
   try {
@@ -28,7 +31,11 @@ connectDB();
 
 async function startApolloServer(typeDefs, resolvers) {
   // Same ApolloServer initialization as before
-  const server = new ApolloServer({ typeDefs, resolvers });
+  const server = new ApolloServer({
+    typeDefs,
+    resolvers,
+    context: () => ({ mongoDataMethods }),
+  });
 
   // Required logic for integrating with Express
   await server.start();
