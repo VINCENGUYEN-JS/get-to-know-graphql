@@ -1,1 +1,16 @@
 @import "~antd/dist/antd.css";
+
+.App .ant-layout-header,
+.ant-layout-footer {
+  color: #fff;
+  background: #bae7ff;
+  text-align: center;
+}
+
+.book-details > .ant-card {
+  background: #adc6ff;
+}
+
+.ant-card-body {
+  border: 1px solid #bae7ff;
+}
