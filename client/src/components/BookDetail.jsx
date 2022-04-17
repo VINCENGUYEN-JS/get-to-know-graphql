@@ -7,17 +7,16 @@ import { getBook } from "../graphql-client/queries.js";
 function BookDetail({ id }) {
   const { loading, error, data } = useQuery(getBook, {
     variables: { id: id },
+    skip: id === null,
   });
   if (loading) {
     return <div>Loading...</div>;
   }
-  if (id !== null && error) {
+  if (error) {
     return <div>Error loading</div>;
   }
 
-  const book = !loading && !error && data.book;
-
-  console.log({ book });
+  const book = id !== null ? data?.book : null;
 
   return (
     <div className="book-details">

@@ -1,14 +1,57 @@
 import React from "react";
 import { Row, Col, Form, Input, Select, Button } from "antd";
+import { useQuery, useMutation } from "@apollo/client";
+
+import { getAuthors, getBooks } from "../graphql-client/queries";
+import { addSingleBook, addSingleAuthor } from "../graphql-client/mutations.js";
 
 const { Option } = Select;
 
 function Forms() {
+  const { loading, data, error } = useQuery(getAuthors);
+
+  const [addBook, dataBookMutation] = useMutation(addSingleBook);
+
+  const [addAuthor, dataAuthorMutation] = useMutation(addSingleAuthor);
+
+  const submitBookForm = (values) => {
+    addBook({
+      variables: {
+        name: values.username,
+        genre: values.bookgenre,
+        authorId: values.author,
+      },
+      refetchQueries: [
+        {
+          query: getBooks,
+        },
+      ],
+    });
+  };
+
+  const submitAuthorForm = (values) => {
+    addAuthor({
+      variables: {
+        name: values.authorname,
+        age: Number(values.authorage),
+      },
+      refetchQueries: [
+        {
+          query: getAuthors,
+        },
+      ],
+    });
+  };
+
   return (
     <div style={{ marginTop: "16px" }}>
       <Row>
         <Col span={12}>
-          <Form labelCol={{ span: 8 }} wrapperCol={{ span: 16 }}>
+          <Form
+            labelCol={{ span: 8 }}
+            wrapperCol={{ span: 16 }}
+            onFinish={submitBookForm}
+          >
             <Form.Item
               label="Book Name"
               name="username"
@@ -43,13 +86,12 @@ function Forms() {
                 },
               ]}
             >
-              <Select
-                placeholder="Select a option and change input text above"
-                allowClear
-              >
-                <Option value="male">male</Option>
-                <Option value="female">female</Option>
-                <Option value="other">other</Option>
+              <Select placeholder="Select Author Name" allowClear>
+                {data?.authors?.map((author) => (
+                  <Option key={author.id} value={author.id}>
+                    {author.name}
+                  </Option>
+                ))}
               </Select>
             </Form.Item>
             <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
@@ -60,7 +102,11 @@ function Forms() {
           </Form>
         </Col>
         <Col span={12}>
-          <Form labelCol={{ span: 4 }} wrapperCol={{ span: 16 }}>
+          <Form
+            labelCol={{ span: 4 }}
+            wrapperCol={{ span: 16 }}
+            onFinish={submitAuthorForm}
+          >
             <Form.Item
               label="Author name"
               name="authorname"
